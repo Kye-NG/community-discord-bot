@@ -2,7 +2,7 @@ import { Client, ChannelType } from "discord.js";
 import dotenv from "dotenv";
 dotenv.config();
 
-// Create a new client instance
+// Create a new client instance. Intents field allows all permissions to bot for now.
 const client = new Client({ intents: 131071 });
 
 const discordBotToken = process.env.DISCORD_BOT_TOKEN;
