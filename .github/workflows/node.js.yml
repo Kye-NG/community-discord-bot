@@ -32,6 +32,7 @@ jobs:
         key: ${{secrets.VPS_SECRET}}
         host: ${{secrets.VPS_URL}}
         username: ${{secrets.VPS_USERNAME}}
+        port: ${{secrets.VPS_PORT}}
         script: |
           pm2 delete all
           cd /var/app/community-discord-bot
