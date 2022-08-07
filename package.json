@@ -20,6 +20,7 @@
   "scripts": {
     "compile": "tsc",
     "start": "npx nodemon ./src/index.ts",
+    "serve": "tsc && node ./bin/index.js",
     "lint": "eslint src/**/*.ts"
   },
   "dependencies": {
