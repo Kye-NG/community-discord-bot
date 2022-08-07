@@ -20,8 +20,6 @@ const tikTokOtherRegex: RegExp = /https:\/\/vt\.tiktok\.com\/\d*/gm;
 client.once('ready', async() => {
 	console.log('Ready!');
 
-    client.user?.setUsername('Gaia');
-
     // Show in a bot channel that the bot is online.
     if (process.env.ENVIRONMENT === 'production') {
         const guild = await client.guilds.fetch(process.env.DISCORD_SERVER_ID || '');
