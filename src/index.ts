@@ -14,10 +14,13 @@ const discordBotPrefix = process.env.DISCORD_BOT_PREFIX;
 const tiktokRegex: RegExp = /https?:\/\/www\.tiktok\.com\/@.+\/video\/\d*/gm;
 const tiktokMobileRegex: RegExp = /https?:\/\/m\.tiktok\.com\/v\/\d*/gm;
 const tiktokMobileAltRegex: RegExp = /https?:\/\/vm\.tiktok\.com\/\d*/gm;
+const tikTokOtherRegex: RegExp = /https:\/\/vt\.tiktok\.com\/\d*/gm;
 
 // When the client is ready, run this code (only once)
 client.once('ready', async() => {
 	console.log('Ready!');
+
+    client.user?.setUsername('Gaia');
 
     // Show in a bot channel that the bot is online.
     if (process.env.ENVIRONMENT === 'production') {
@@ -42,7 +45,12 @@ client.on('messageCreate', async message => {
         message.channel.send('tighe is hot');
     }
 
-    else if ((tiktokRegex.test(message.content) || tiktokMobileRegex.test(message.content) || tiktokMobileAltRegex.test(message.content))) {
+    else if ((
+        tiktokRegex.test(message.content) ||
+        tiktokMobileRegex.test(message.content) ||
+        tiktokMobileAltRegex.test(message.content) ||
+        tikTokOtherRegex.test(message.content)
+    )) {
         const loadingEmoji = message?.guild?.emojis.cache.get('1005501506021228685');
 
         message.react(loadingEmoji || '👍');
