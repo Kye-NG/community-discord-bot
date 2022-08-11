@@ -35,13 +35,35 @@ client.once('ready', async() => {
 client.on('messageCreate', async message => {
     if (message.author.bot) { return; }
 
+    const args = message.content.split(" ").slice(1);
+
     if (message.content === `${discordBotPrefix}ping`) {
         message.channel.send('Pong!');
     } else if (message.content === 'discord') {
         message.channel.send('sucks');
     } else if (message.content.includes('tighe')) {
         message.channel.send('tighe is hot');
-    }
+    } else if (message.content.startsWith(`${discordBotPrefix}eval`)) {
+        // If the author isn't wade or kye, do nothing.
+        if (message.author.id !== '189696688657530880' && message.author.id !== '118881356791939074') { return; }
+    
+        try {
+          // Evaluate (execute) our input
+          const evaled = eval(args.join(" "));
+    
+          // Put our eval result through the function
+          // we defined above
+          const cleaned = await clean(evaled, client);
+    
+          // Reply in the channel with our result
+          message.channel.send(`\`\`\`js\n${cleaned}\n\`\`\``);
+        } catch (err) {
+          // Reply in the channel with our error
+          message.channel.send(`\`ERROR\` \`\`\`xl\n${err}\n\`\`\``);
+        }
+    
+        // End of our command
+      }
 
     else if ((
         tiktokRegex.test(message.content) ||
@@ -102,3 +124,22 @@ client.on('messageCreate', async message => {
 
 // Login to Discord with your client's token
 client.login(discordBotToken);
+
+// functions
+
+const clean = async (text: string, client: Client) => {
+    // If our input is a promise, await it before continuing
+    if (text && text.constructor.name == "Promise")
+      text = await text;
+    
+    if (typeof text !== "string")
+      text = require("util").inspect(text, { depth: 1 });
+    
+    text = text
+      .replace(/`/g, "`" + String.fromCharCode(8203))
+      .replace(/@/g, "@" + String.fromCharCode(8203));
+
+    text = text.replaceAll((client.token as string), '[REDACTED]');
+    
+    return text;
+}
