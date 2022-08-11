@@ -16,6 +16,11 @@ const tiktokMobileRegex: RegExp = /https?:\/\/m\.tiktok\.com\/v\/\d*/gm;
 const tiktokMobileAltRegex: RegExp = /https?:\/\/vm\.tiktok\.com\/\d*/gm;
 const tikTokOtherRegex: RegExp = /https:\/\/vt\.tiktok\.com\/\d*/gm;
 
+process.on('uncaughtException', err => {
+    console.error('There was an uncaught error', err);
+    process.exit(1);
+});
+
 // When the client is ready, run this code (only once)
 client.once('ready', async() => {
 	console.log('Ready!');
