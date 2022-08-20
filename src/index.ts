@@ -1,14 +1,27 @@
-import { Client, ChannelType } from 'discord.js';
+import { CommunityDiscordClientOptions } from './declarations/community-discord-client-options';import { Client, ChannelType } from 'discord.js';
+import { CommunityDiscordClient } from './classes/discord-client';
 import Puppeteer from 'puppeteer';
 import dotenv from 'dotenv';
 import axios from 'axios';
+
+// Inject ENV variables into process.env
 dotenv.config();
 
-// Create a new client instance. Intents field allows all permissions to bot for now.
-const client = new Client({ intents: 131071 });
-
+// ENV Variables
 const discordBotToken = process.env.DISCORD_BOT_TOKEN;
 const discordBotPrefix = process.env.DISCORD_BOT_PREFIX;
+const { KYE_DISCORD_ID, WADE_DISCORD_ID } = process.env;
+
+const options: CommunityDiscordClientOptions = {
+    owners: [KYE_DISCORD_ID, WADE_DISCORD_ID],
+    prefix: discordBotPrefix || '!',
+    commandDirectory: './commands',
+    debug: process.env.ENVIRONMENT !== 'production',
+    unknownCommandResponse: true
+};
+
+// Create a new client instance. Intents field allows all permissions to bot for now.
+const client = new CommunityDiscordClient({ intents: 131071 }, options);
 
 // Tik tok Regexs
 const tiktokRegex: RegExp = /https?:\/\/www\.tiktok\.com\/@.+\/video\/\d*/gm;
