@@ -29,7 +29,7 @@ export default class HelpCommand extends Command {
         const regexCommands = [...(message.client as CommunityDiscordClient).commands.values()].filter((command: Command) => command.regexs.length > 0);
 
         for (const command of textCommands) {
-            textCommandValue += `\`${command.name}\` - ${command.description}\n`;
+            textCommandValue += `\`${(message.client as CommunityDiscordClient).prefix}${command.name}\` - ${command.description}\n`;
         }
 
         for (const command of regexCommands) {
