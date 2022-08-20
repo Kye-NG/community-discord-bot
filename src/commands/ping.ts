@@ -2,11 +2,11 @@ import { Message } from "discord.js";
 import { Command } from "../classes/command";
 import { CommandOptions } from "../declarations/command-options";
 
-export default class TestCommand extends Command {
+export default class PingCommand extends Command {
     constructor() {
         const options: CommandOptions = {
-            name: 'test',
-            description: 'Test command',
+            name: 'ping',
+            description: 'Ping to see if the bot is online. Returns "pong"',
             ownerOnly: false,
             perms: ['SEND_MESSAGES']
         };
@@ -15,7 +15,6 @@ export default class TestCommand extends Command {
     }
 
     async run(message: Message, args: unknown) {
-        message.channel.send('Hello');
-        console.log('TestCommand run');
+        message.channel.send('Pong!');
     }
 }

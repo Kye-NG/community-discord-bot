@@ -5,5 +5,4 @@ export interface CommunityDiscordClientOptions {
     prefix: string;
     commandDirectory: string;
     debug: boolean;
-    unknownCommandResponse: boolean;
 }
