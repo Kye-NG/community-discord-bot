@@ -59,8 +59,10 @@ client.on('messageCreate', async message => {
         message.channel.send('Pong!');
     } else if (message.content === 'discord') {
         message.channel.send('sucks');
-    } else if (message.content.includes('tighe')) {
-        message.channel.send('tighe is hot');
+    } else if (message.content.toLowerCase().includes('tighe')) {
+        const tigheEmoji = message?.guild?.emojis.cache.get('1005059113027391548');
+
+        message.react(tigheEmoji || '👍');
     } else if (message.content.startsWith(`${discordBotPrefix}eval`)) {
         // If the author isn't wade or kye, do nothing.
         if (message.author.id !== '189696688657530880' && message.author.id !== '118881356791939074') { return; }
