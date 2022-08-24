@@ -22,11 +22,6 @@ const options: CommunityDiscordClientOptions = {
 // Create a new client instance. Intents field allows all permissions to bot for now.
 const client = new CommunityDiscordClient({ intents: 131071 }, options);
 
-process.on('uncaughtException', err => {
-    console.error('There was an uncaught error', err);
-    process.exit(1);
-});
-
 // When the client is ready, run this code (only once)
 client.once('ready', async() => {
     handleReadyEvent(client);
