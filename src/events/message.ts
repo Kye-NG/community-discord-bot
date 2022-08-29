@@ -24,7 +24,7 @@ export async function handleMessageEvent(message: Message, client: CommunityDisc
 
         await command.run(message, args);
     } else {
-        const regexCommands = [...client.commands.values()].filter((command: Command) => command.regexs.length > 0);
+        const regexCommands = [...client.commands.values()].filter((command: Command) => command.regexs && command.regexs.length > 0);
 
         let args = message.content.slice(client.prefix.length).split(/ +/);
 

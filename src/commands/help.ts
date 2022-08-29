@@ -25,8 +25,8 @@ export default class HelpCommand extends Command {
         let textCommandValue = '';
         let regexCommandValue ='';
         
-        const textCommands = [...(message.client as CommunityDiscordClient).commands.values()].filter((command: Command) => command.regexs.length === 0);
-        const regexCommands = [...(message.client as CommunityDiscordClient).commands.values()].filter((command: Command) => command.regexs.length > 0);
+        const textCommands = [...(message.client as CommunityDiscordClient).commands.values()].filter((command: Command) => !command.regexs || command.regexs.length === 0);
+        const regexCommands = [...(message.client as CommunityDiscordClient).commands.values()].filter((command: Command) => command.regexs && command.regexs.length > 0);
 
         for (const command of textCommands) {
             textCommandValue += `\`${(message.client as CommunityDiscordClient).prefix}${command.name}\` - ${command.description}\n`;
