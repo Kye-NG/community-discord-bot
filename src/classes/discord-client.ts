@@ -5,15 +5,17 @@ import HelpCommand from "../commands/help";
 import PingCommand from "../commands/ping";
 import EvalCommand from "../commands/eval";
 import TikTokCommand from "../commands/tiktok";
-import TigheCommand from "../commands/tighe";
-import ArtfulCommand from "../commands/artful";
-import EmkayCommand from "../commands/emkay";
-import DanielCommand from "../commands/daniel";
-import JakeCommand from "../commands/jake";
-import OliviaCommand from "../commands/olivia";
-import InzaCommand from "../commands/inza";
-import MomoCommand from "../commands/momo";
-import NetteCommand from "../commands/nette";
+import TigheCommand from "../commands/reacts/tighe";
+import ArtfulCommand from "../commands/reacts/artful";
+import EmkayCommand from "../commands/reacts/emkay";
+import DanielCommand from "../commands/reacts/daniel";
+import JakeCommand from "../commands/reacts/jake";
+import OliviaCommand from "../commands/reacts/olivia";
+import InzaCommand from "../commands/reacts/inza";
+import MomoCommand from "../commands/reacts/momo";
+import NetteCommand from "../commands/reacts/nette";
+import WadeCommand from "../commands/reacts/wade";
+import VaderCommand from "../commands/reacts/vader";
 
 const commandsList = [
 	new TestCommand(),
@@ -29,7 +31,9 @@ const commandsList = [
 	new OliviaCommand(),
 	new InzaCommand(),
 	new MomoCommand(),
-	new NetteCommand()
+	new NetteCommand(),
+	new WadeCommand(),
+	new VaderCommand()
 ];
 
 export class CommunityDiscordClient extends Client {
