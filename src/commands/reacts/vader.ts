@@ -5,12 +5,13 @@ import { CommandOptions } from "../../declarations/command-options";
 export default class VaderCommand extends Command {
     constructor() {
         const options: CommandOptions = {
-            name: 'vader',
-            description: 'If the message says vader or bananafarts you get a react. ;)',
+            name: 'vada',
+            description: 'If the message says vada or bananafarts you get a react. ;)',
             ownerOnly: true,
             perms: ['SEND_MESSAGES'],
             regexs: [
                 /vader/gi,
+                /vada/gi,
                 /bananafarts/gi
             ]
         };

@@ -19,7 +19,7 @@ export default class InzaCommand extends Command {
     }
 
     async run(message: Message, args: string[]) {
-        const inzaEmoji = message?.guild?.emojis.cache.get('1005369101755105290');
+        const inzaEmoji = message?.guild?.emojis.cache.get('1013646155768410232');
 
         message.react(inzaEmoji || '👍');
     }
