@@ -1,6 +1,6 @@
 import { Message } from "discord.js";
-import { Command } from "../classes/command";
-import { CommandOptions } from "../declarations/command-options";
+import { Command } from "../../classes/command";
+import { CommandOptions } from "../../declarations/command-options";
 
 export default class JakeCommand extends Command {
     constructor() {
