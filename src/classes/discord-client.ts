@@ -6,6 +6,31 @@ import PingCommand from "../commands/ping";
 import EvalCommand from "../commands/eval";
 import TikTokCommand from "../commands/tiktok";
 import TigheCommand from "../commands/tighe";
+import ArtfulCommand from "../commands/artful";
+import EmkayCommand from "../commands/emkay";
+import DanielCommand from "../commands/daniel";
+import JakeCommand from "../commands/jake";
+import OliviaCommand from "../commands/olivia";
+import InzaCommand from "../commands/inza";
+import MomoCommand from "../commands/momo";
+import NetteCommand from "../commands/nette";
+
+const commandsList = [
+	new TestCommand(),
+	new HelpCommand(),
+	new PingCommand(),
+	new EvalCommand(),
+	new TikTokCommand(),
+	new TigheCommand(),
+	new ArtfulCommand(),
+	new EmkayCommand(),
+	new DanielCommand(),
+	new JakeCommand(),
+	new OliviaCommand(),
+	new InzaCommand(),
+	new MomoCommand(),
+	new NetteCommand()
+];
 
 export class CommunityDiscordClient extends Client {
     owners: (string | undefined)[];
@@ -44,19 +69,9 @@ export class CommunityDiscordClient extends Client {
 	}
 
 	loadCommands() {
-		const testCommand = new TestCommand();
-		const helpCommand = new HelpCommand();
-		const pingCommand = new PingCommand();
-		const evalCommand = new EvalCommand();
-		const tiktokCommand = new TikTokCommand();
-		const tigheCommand = new TigheCommand();
-
-		this.commands.set(testCommand.name, testCommand);
-		this.commands.set(helpCommand.name, helpCommand);
-		this.commands.set(pingCommand.name, pingCommand);
-		this.commands.set(evalCommand.name, evalCommand);
-		this.commands.set(tiktokCommand.name, tiktokCommand);
-		this.commands.set(tigheCommand.name, tigheCommand);
+		for (let command of commandsList) {
+			this.commands.set(command.name, command);
+		}
 
 		if (this.debug) console.log(`Loaded ${this.commands.size} commands!`);
 	}
