@@ -11,7 +11,9 @@ export default class OliviaCommand extends Command {
             perms: ['SEND_MESSAGES'],
             regexs: [
                 /olivia/gi,
-                /beast/gi
+                /beast/gi,
+                /sexy/gi,
+                /liv/gi
             ]
         };
 
