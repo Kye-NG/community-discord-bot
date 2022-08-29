@@ -12,7 +12,7 @@ export async function handleMessageEvent(message: Message, client: CommunityDisc
 
         const command = client.commands.get(commandName);
 
-        if (command.regexs.length > 0) { return; } 
+        if (!!command.regexs && command.regexs.length > 0) { return; } 
 
         if (command.ownerOnly && !(message.author.id === '189696688657530880' || message.author.id === '118881356791939074')) {
             return message.channel.send(`You do not have permission to use this command.`);
