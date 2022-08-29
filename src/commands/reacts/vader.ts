@@ -11,6 +11,7 @@ export default class VaderCommand extends Command {
             perms: ['SEND_MESSAGES'],
             regexs: [
                 /vader/gi,
+                /vada/gi,
                 /bananafarts/gi
             ]
         };
