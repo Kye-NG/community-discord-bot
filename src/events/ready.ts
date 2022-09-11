@@ -1,17 +1,34 @@
-import { ChannelType } from "discord.js";
 import { CommunityDiscordClient } from "../classes/discord-client";
+import { ensureGuildChannelAndSend } from "../functions/utils";
 
 export async function handleReadyEvent(client: CommunityDiscordClient) {
-    console.log('Ready!');
-
     // Show in a bot channel that the bot is online.
-    if (process.env.ENVIRONMENT === 'production') {
-        const guild = await client.guilds.fetch(process.env.DISCORD_SERVER_ID || '');
-        const channel = await guild.channels.fetch(process.env.DISCORD_CHANNEL_ID || '');
+    const guild = await client.guilds.fetch(process.env.DISCORD_SERVER_ID || '');
+    const channel = await guild.channels.fetch(process.env.DISCORD_CHANNEL_ID || '');
 
-        // Type script requires me to type check the channel otherwise .send() won't be available.
-        if (channel && channel.type === ChannelType.GuildText) {
-            await channel.send('Bot is ready!');
-        }
-    }
+    const readyText = process.env.ENVIRONMENT === 'production' ?
+        '[Prod] Bot is online!' :
+        '[Dev] Bot is online!';
+
+    await ensureGuildChannelAndSend(channel, readyText);
+
+    await client.databaseClient.initialize().catch(async(err) => {
+        await ensureGuildChannelAndSend(channel, 'Error initializing database: ' + err);
+
+        throw err;
+    });
+
+    const dbText = process.env.ENVIRONMENT === 'production' ?
+        '[Prod] Database initialised!' :
+        '[Dev] Database initialised!';
+
+    await ensureGuildChannelAndSend(channel, dbText);
+
+    const restartAmount = await client.databaseClient.addOneNumberToValue('clientRestarts');
+
+    const restartText = process.env.ENVIRONMENT === 'production' ?
+        `[Prod] Bot has restarted ${restartAmount + 1} times!` :
+        `[Dev] Bot has restarted ${restartAmount + 1} times!`;
+
+    await ensureGuildChannelAndSend(channel, restartText);
 }

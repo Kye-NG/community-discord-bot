@@ -3,6 +3,7 @@ import axios from 'axios';
 import Puppeteer from 'puppeteer';
 import { Command } from "../classes/command";
 import { CommandOptions } from "../declarations/command-options";
+import { CommunityDiscordClient } from "../classes/discord-client";
 
 export default class TikTokCommand extends Command {
     constructor() {
@@ -67,11 +68,15 @@ export default class TikTokCommand extends Command {
             });
 
             if (message.deletable) {
-                message.delete();
+                message.delete().catch(e => {
+                    console.log(e);
+                });
             }
         }
 
         // Make sure we close the browser.
         await browser.close();
+
+        (message.client as CommunityDiscordClient).databaseClient.addOneNumberToValue('tiktoksSent');
     }
 }

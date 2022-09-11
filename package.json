@@ -19,7 +19,7 @@
   },
   "scripts": {
     "compile": "tsc",
-    "start": "npx nodemon ./src/index.ts",
+    "start": "npx nodemon ./src/index.ts --ignore **/bin/** --ignore **/node_modules/**",
     "serve": "tsc && node ./bin/index.js",
     "lint": "eslint src/**/*.ts"
   },
