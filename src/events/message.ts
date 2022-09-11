@@ -31,8 +31,10 @@ export async function handleMessageEvent(message: Message, client: CommunityDisc
         let args = message.content.slice(client.prefix.length).split(/ +/);
 
         regexCommands.forEach((regexCommand: Command) => {
-            regexCommand.regexs.forEach((regex: RegExp) => {
+            regexCommand.regexs.forEach(async(regex: RegExp) => {
                 if (regex.test(message.content)) {
+                    await client.databaseClient.addOneNumberToValue('reactsSent');
+
                     return regexCommand.run(message, args);
                 }
             });

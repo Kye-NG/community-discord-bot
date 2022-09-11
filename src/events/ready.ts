@@ -1,3 +1,5 @@
+
+import { ActivityType } from "discord.js";
 import { CommunityDiscordClient } from "../classes/discord-client";
 import { ensureGuildChannelAndSend } from "../functions/utils";
 
@@ -31,4 +33,7 @@ export async function handleReadyEvent(client: CommunityDiscordClient) {
         `[Dev] Bot has restarted ${restartAmount + 1} times!`;
 
     await ensureGuildChannelAndSend(channel, restartText);
+
+    // Set the client user's activity
+    client.initialiseActivities();
 }

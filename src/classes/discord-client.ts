@@ -1,5 +1,6 @@
-import { Client, ClientOptions } from "discord.js";
+import { ActivityType, Client, ClientOptions } from "discord.js";
 import { CommunityDiscordClientOptions } from "../declarations/community-discord-client-options";
+import cron from 'node-cron';
 import TestCommand from "../commands/test";
 import HelpCommand from "../commands/help";
 import PingCommand from "../commands/ping";
@@ -17,6 +18,7 @@ import NetteCommand from "../commands/reacts/nette";
 import WadeCommand from "../commands/reacts/wade";
 import VaderCommand from "../commands/reacts/vader";
 import { Database } from "./database";
+import { Activies } from "../declarations/activities";
 
 const commandsList = [
 	new TestCommand(),
@@ -44,6 +46,7 @@ export class CommunityDiscordClient extends Client {
     debug: boolean;
     commands: Map<string, any>;
 	databaseClient: Database;
+	activities: Activies[] = [];
 
     constructor(discordOptions: ClientOptions, customOptions: CommunityDiscordClientOptions) {
         super(discordOptions);
@@ -81,5 +84,36 @@ export class CommunityDiscordClient extends Client {
 		}
 
 		if (this.debug) console.log(`Loaded ${this.commands.size} commands!`);
+	}
+
+	async initialiseActivities() {
+		const restartAmount = await this.databaseClient.get('clientRestarts');
+		this.user?.setActivity(`I've restarted ${restartAmount} times`, { type: ActivityType.Playing });
+
+		// setup cronjob to change activity every 30 minutes
+		// 0 * * * *
+		cron.schedule('0 * * * *', async () => {
+			await this.updateActivities();
+
+			const activity = this.activities[Math.floor(Math.random() * this.activities.length)];
+
+			this.user?.setActivity(activity.text, { type: activity.type });
+		});
+	}
+
+	async updateActivities() {
+		const tikTokCount = await this.databaseClient.get('tiktoksSent');
+		const restartCount = await this.databaseClient.get('clientRestarts');
+		const reactCount = await this.databaseClient.get('reactsSent');
+
+		this.activities = [
+			{ text: `${tikTokCount} tik toks so far!`, type: ActivityType.Watching },
+			{ text: `I've restarted ${restartCount} times`, type: ActivityType.Playing },
+			{ text: 'licking my butt', type: ActivityType.Playing },
+			{ text: `${process.env.DISCORD_BOT_PREFIX}help for list`, type: ActivityType.Playing },
+			{ text: `i've reacted ${reactCount} times`, type: ActivityType.Playing },
+			{ text: 'to russian hardbass', type: ActivityType.Listening },
+			{ text: '(´・ω・｀)', type: ActivityType.Watching },
+		];
 	}
 }
