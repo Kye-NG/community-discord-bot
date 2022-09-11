@@ -1,3 +1,4 @@
+
 import { ActivityType } from "discord.js";
 import { CommunityDiscordClient } from "../classes/discord-client";
 import { ensureGuildChannelAndSend } from "../functions/utils";
