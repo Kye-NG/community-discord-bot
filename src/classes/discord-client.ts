@@ -16,6 +16,7 @@ import MomoCommand from "../commands/reacts/momo";
 import NetteCommand from "../commands/reacts/nette";
 import WadeCommand from "../commands/reacts/wade";
 import VaderCommand from "../commands/reacts/vader";
+import { Database } from "./database";
 
 const commandsList = [
 	new TestCommand(),
@@ -42,6 +43,7 @@ export class CommunityDiscordClient extends Client {
     commandDirectory: string;
     debug: boolean;
     commands: Map<string, any>;
+	databaseClient: Database;
 
     constructor(discordOptions: ClientOptions, customOptions: CommunityDiscordClientOptions) {
         super(discordOptions);
@@ -58,6 +60,7 @@ export class CommunityDiscordClient extends Client {
 		this.prefix = customOptions.prefix;
 		this.commandDirectory = customOptions.commandDirectory;
 		this.debug = customOptions.debug;
+		this.databaseClient = customOptions.databaseClient;
 
         this.commands = new Map();
     }
