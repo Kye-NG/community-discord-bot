@@ -20,10 +20,6 @@ export async function handleMessageEvent(message: Message, client: CommunityDisc
             return message.channel.send(`You do not have permission to use this command.`);
         }
 
-        if (command.perms.length > 0 && !message.member?.permissions.has(command.perms)) {
-            return message.channel.send(`You do not have permission to use this command.`);
-        }
-
         await command.run(message, args);
     } else {
         const regexCommands = [...client.commands.values()].filter((command: Command) => command.regexs && command.regexs.length > 0);
