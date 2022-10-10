@@ -19,6 +19,7 @@ import WadeCommand from "../commands/reacts/wade";
 import VaderCommand from "../commands/reacts/vader";
 import { Database } from "./database";
 import { Activies } from "../declarations/activities";
+import AddBirthdayCommand from "../commands/addBirthday";
 
 const commandsList = [
 	new TestCommand(),
@@ -36,7 +37,8 @@ const commandsList = [
 	new MomoCommand(),
 	new NetteCommand(),
 	new WadeCommand(),
-	new VaderCommand()
+	new VaderCommand(),
+	new AddBirthdayCommand()
 ];
 
 export class CommunityDiscordClient extends Client {
@@ -87,7 +89,7 @@ export class CommunityDiscordClient extends Client {
 	}
 
 	async initialiseActivities() {
-		const restartAmount = await this.databaseClient.get('clientRestarts');
+		const restartAmount = this.databaseClient.get('clientRestarts');
 		this.user?.setActivity(`I've restarted ${restartAmount} times`, { type: ActivityType.Playing });
 
 		// setup cronjob to change activity every 30 minutes
@@ -101,10 +103,10 @@ export class CommunityDiscordClient extends Client {
 		});
 	}
 
-	async updateActivities() {
-		const tikTokCount = await this.databaseClient.get('tiktoksSent');
-		const restartCount = await this.databaseClient.get('clientRestarts');
-		const reactCount = await this.databaseClient.get('reactsSent');
+	updateActivities() {
+		const tikTokCount = this.databaseClient.get('tiktoksSent');
+		const restartCount = this.databaseClient.get('clientRestarts');
+		const reactCount = this.databaseClient.get('reactsSent');
 
 		this.activities = [
 			{ text: `${tikTokCount} tik toks so far!`, type: ActivityType.Watching },
