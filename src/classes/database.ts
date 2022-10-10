@@ -40,7 +40,7 @@ export class Database {
         return await fs.writeFile(this.filePath, JSON.stringify(this.memoryDb), 'utf8');
     }
 
-    async get(key: string): Promise<any> {
+    get(key: string): any {
         return this.memoryDb[key];
     }
 
