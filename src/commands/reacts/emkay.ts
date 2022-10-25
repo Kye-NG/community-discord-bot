@@ -20,7 +20,7 @@ export default class EmkayCommand extends Command {
     }
 
     async run(message: Message, args: string[]) {
-        const emilyEmoji = message?.guild?.emojis.cache.get('1007663404330266624');
+        const emilyEmoji = message?.guild?.emojis.cache.get('1034411405941682197');
 
         message.react(emilyEmoji || '👍');
     }
