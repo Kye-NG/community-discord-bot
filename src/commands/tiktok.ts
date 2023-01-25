@@ -28,12 +28,12 @@ export default class TikTokCommand extends Command {
 
     const reaction = message.react(loadingEmoji || '👍');
 
-    try {
-      const browser = await Puppeteer.launch({
-        headless: true,
-        args: ['--no-sandbox', '--disable-setuid-sandbox'],
-      });
+    const browser = await Puppeteer.launch({
+      headless: true,
+      args: ['--no-sandbox', '--disable-setuid-sandbox'],
+    });
 
+    try {
       const page = await browser.newPage();
 
       page.setUserAgent('Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/90.0.4430.72 Safari/537.36');
@@ -89,6 +89,8 @@ export default class TikTokCommand extends Command {
 
      (message.client as CommunityDiscordClient).databaseClient.addOneNumberToValue('tiktoksSent');
     } catch (e) {
+      await browser.close();
+
       console.log((e as any).message);
       const errorText = (e as any).message;
       (await reaction).remove();
@@ -99,7 +101,7 @@ export default class TikTokCommand extends Command {
         message.react(mobileOnlyEmoji || '📱');
 
         await sendErrorMessageThenDelete(message, 5000, 'This tik tok cannot be embedded, it\'s only available on mobile! Self destructing in 5 seconds...');
-    } else {
+      } else {
         const checkEngineEmoji = message?.guild?.emojis.cache.get('1007137550298792048');
         message.react(checkEngineEmoji || '🛑');
 
