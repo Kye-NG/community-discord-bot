@@ -5,6 +5,7 @@ import { handleReadyEvent } from './events/ready';
 import dotenv from 'dotenv';
 import { Database } from './classes/database';
 import { resolve } from 'path';
+import { handleGuildMemberAdd } from './events/guildMemberAdd';
 
 // Inject ENV variables into process.env
 dotenv.config();
@@ -34,6 +35,10 @@ client.once('ready', async() => {
 
 client.on('messageCreate', async message => {
     handleMessageEvent(message, client);
+});
+
+client.on('guildMemberAdd', async member => {
+    handleGuildMemberAdd(member, client);
 });
 
 // Login to Discord with your client's token
